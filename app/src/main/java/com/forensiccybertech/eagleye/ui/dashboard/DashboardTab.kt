@@ -114,8 +114,8 @@ fun DashboardTab(app: EagleEyeApp, onOpenAlert: (Alert) -> Unit, onSeeAllAlerts:
                     )
                 }
             }
-            SectionCard("Alert volume", "Last 7 days · critical → low") { DailyStackedBars(days) }
-            SectionCard("Activity heatmap", "Hourly pattern") { Heatmap(heat, MaterialTheme.colorScheme.primary) }
+            SectionCard("Alert volume", subtitle = "Last 7 days · critical → low") { DailyStackedBars(days) }
+            SectionCard("Activity heatmap", subtitle = "Hourly pattern") { Heatmap(heat, MaterialTheme.colorScheme.primary) }
 
             if (s != null) {
                 SectionCard("Automated response") {
@@ -131,7 +131,7 @@ fun DashboardTab(app: EagleEyeApp, onOpenAlert: (Alert) -> Unit, onSeeAllAlerts:
                 }
             }
             ui.top?.let { t ->
-                SectionCard("Top detection rules", t.period.takeIf { it.isNotEmpty() }) { BarList(t.rules, Color(0xFFE53935)) }
+                SectionCard("Top detection rules", subtitle = t.period.takeIf { it.isNotEmpty() }) { BarList(t.rules, Color(0xFFE53935)) }
                 SectionCard("Top targeted devices") { BarList(t.agents.ifEmpty { ui.summary?.topAgents.orEmpty() }, Color(0xFFF57C00)) }
                 SectionCard("MITRE tactics") { BarList(t.tactics, Color(0xFF5E35B1)) }
                 SectionCard("MITRE techniques") { BarList(t.techniques, Color(0xFF3949AB)) }
