@@ -1,0 +1,4 @@
+-keepattributes *Annotation*, Signature, InnerClasses
+-keep,includedescriptorclasses class com.forensiccybertech.eagleye.**$$serializer { *; }
+-keepclassmembers class com.forensiccybertech.eagleye.** { *** Companion; }
+-dontwarn okhttp3.internal.platform.**
