@@ -12,6 +12,7 @@ class EagleEyeApp : Application() {
     lateinit var session: SessionManager; private set
     lateinit var api: ApiClient; private set
     lateinit var auth: AuthRepository; private set
+    lateinit var theme: com.forensiccybertech.eagleye.ui.theme.ThemeStore; private set
 
     override fun onCreate() {
         super.onCreate()
@@ -19,5 +20,6 @@ class EagleEyeApp : Application() {
         session = SessionManager(jar)
         api = ApiClient(jar, session)
         auth = AuthRepository(api.http, session, jar)
+        theme = com.forensiccybertech.eagleye.ui.theme.ThemeStore(this)
     }
 }

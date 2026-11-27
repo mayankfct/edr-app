@@ -97,4 +97,5 @@ class ApiClient(jar: EncryptedCookieJar, session: SessionManager) {
     val alerts: AlertsService = retrofit.create(AlertsService::class.java)
     val stats: StatsService = retrofit.create(StatsService::class.java)
     val hosts: HostsService = retrofit.create(HostsService::class.java)
+    val vulns: VulnsService = retrofit.create(VulnsService::class.java)
 }

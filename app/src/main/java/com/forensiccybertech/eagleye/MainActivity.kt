@@ -3,10 +3,12 @@ package com.forensiccybertech.eagleye
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,6 +22,7 @@ import com.forensiccybertech.eagleye.data.SessionState
 import com.forensiccybertech.eagleye.ui.MainScaffold
 import com.forensiccybertech.eagleye.ui.login.LoginScreen
 import com.forensiccybertech.eagleye.ui.theme.EagleEyeTheme
+import com.forensiccybertech.eagleye.ui.theme.ThemeMode
 import com.forensiccybertech.eagleye.util.onlineFlow
 
 class MainActivity : ComponentActivity() {
@@ -28,13 +31,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val app = application as EagleEyeApp
         setContent {
-            EagleEyeTheme {
+            val mode by app.theme.mode.collectAsStateWithLifecycle()
+            val dark = when (mode) { ThemeMode.System -> isSystemInDarkTheme(); ThemeMode.Light -> false; ThemeMode.Dark -> true }
+            EagleEyeTheme(darkTheme = dark) {
                 val state by app.session.state.collectAsStateWithLifecycle()
                 val online by remember { applicationContext.onlineFlow() }.collectAsStateWithLifecycle(initialValue = true)
                 Surface(Modifier.fillMaxSize()) {
                     Column(Modifier.fillMaxSize()) {
-                        if (!online) Text(
-                            "No internet connection", Modifier.fillMaxWidth().padding(8.dp),
+                        // Signed in: the header's LIVE/OFFLINE pill covers connectivity. Login screen gets a banner.
+                        if (!online && state != SessionState.LoggedIn) Text(
+                            "No internet connection", Modifier.fillMaxWidth().statusBarsPadding().padding(8.dp),
                             color = MaterialTheme.colorScheme.error
                         )
                         when (state) {

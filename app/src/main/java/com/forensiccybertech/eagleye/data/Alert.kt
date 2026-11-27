@@ -34,6 +34,9 @@ data class Alert(
     val deviceName: String,
     val deviceSerial: String,
     val processChain: List<ProcessNode>,
+    val processId: String = "",
+    val integrity: String = "",
+    val signer: String = "",
 )
 
 /**
@@ -93,6 +96,9 @@ object AlertParser {
             autoAction = s("auto_action_name").takeIf { it != "unknown" }.orEmpty(),
             deviceName = s("device_name"), deviceSerial = s("serial_number"),
             processChain = chain,
+            processId = s("process_id").replace(",", ""),
+            integrity = s("integrity_level").takeIf { it != "undefined" }.orEmpty(),
+            signer = s("image_signer").ifEmpty { s("signer") },
         ).takeIf { id.isNotEmpty() } ?: error("alert without id")
     }
 

@@ -56,7 +56,14 @@ Shapes were taken from the web console's frontend code; verify against live resp
 | Dashboard: KPIs, severity donut, 7-day volume, heatmap, response actions, categories, top rules/devices/MITRE/users/tags, recent alerts | `/api/v1/stats/summary`, `/api/v1/stats/top`, `/api/v1/stats/timeline?period=7d&interval=1h`, `/api/v1/alerts` |
 | Alerts: severity/category chips, process-name search, paging, detail | `/api/v1/alerts?page&size&sort_by&sort_order&severity&process_name&event_category` |
 | Devices: totals, seats, online/offline, isolated badge, search | `/api/v1/hosts` |
-Not included: vulnerabilities (`/api/v1/vulns*`), rules/groups, notifications, and any action (isolate, uninstall...).
+| Vulns: KPIs (open/patched/KEV/hosts/MTTP), severity donut, priority bars, top CVEs, findings list with severity filter + paging | `/api/v1/vulns/summary`, `/api/v1/vulns/stats/top-cves`, `/api/v1/vulns?limit&offset&severity` (severity value case is unverified: uppercase is sent) |
+Alerts also has a host dropdown (`agent_id` filter) and a search box with suggestions (users from `stats/top` + loaded alerts, and process names). Picking a user filters the loaded alerts on the device, because the API only filters by process name. Devices search suggests hosts, users and IPs.
+
+Design: the UI follows the "EaglEye Sentinel" design system from the designer's Stitch export (navy surface layers, cyan primary, severity pills, monospace forensic blocks with tap-to-copy, 4-tab bottom bar, LIVE pill header). Tokens are in `ui/theme/Theme.kt` (`EagleColors` holds what Material3 has no slot for); shared components in `ui/components/Widgets.kt`. Fonts: Roboto Flex and JetBrains Mono from the design are not bundled; the app uses the system sans font and the system monospace. Not implemented from the mockups: tablet dual-pane, the mic button in search, risk-score sorting (no data), and the decorative claims shown in the login mockup (FIPS/SOC2/biometric).
+
+Appearance: Theme (System / Light / Dark) in the top-bar menu, remembered across launches. The login screen recreates the Vanguard sign-in look natively (logo copied from auth.eagleyesoc.ai); sign-in still happens inside the app.
+
+Not included: vulnerability inventory/apps/scans, custom rules/groups, notifications, and any action (isolate, uninstall...).
 
 ## Status
 Source complete for login + alerts; **not yet built or tested** (no Android SDK on the dev machine). Pending: stats/hosts/groups screens (need endpoint + sample JSON), test evidence.

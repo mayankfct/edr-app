@@ -28,6 +28,17 @@ interface StatsService {
     suspend fun timeline(@Query("period") period: String = "7d", @Query("interval") interval: String = "1h"): ResponseBody
 }
 
+interface VulnsService {
+    @GET("api/v1/vulns/summary") suspend fun summary(): ResponseBody
+    @GET("api/v1/vulns/stats/top-cves") suspend fun topCves(): ResponseBody
+    @GET("api/v1/vulns")
+    suspend fun findings(
+        @Query("limit") limit: Int, @Query("offset") offset: Int,
+        @Query("severity") severity: String? = null, @Query("priority") priority: String? = null,
+        @Query("status") status: String? = null, @Query("hostname") hostname: String? = null,
+    ): ResponseBody
+}
+
 interface HostsService {
     @GET("api/v1/hosts") suspend fun hosts(): ResponseBody
 }
