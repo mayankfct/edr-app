@@ -49,5 +49,14 @@ Cookies are kept in an OkHttp `CookieJar` persisted encrypted (Android Keystore)
 | Alerts list (paged, pull-to-refresh) / detail | `GET /api/v1/alerts?page&size&sort_by=@timestamp&sort_order=desc` |
 The alert parser accepts a bare array, `{alerts|data|items|results|hits: ...}` or OpenSearch `hits.hits[]._source`, and both real JSON arrays and JSON-in-string values (as in the OpenSearch CSV export). **Verify against a live response** – the real envelope is unconfirmed. Field mapping: see `data/Alert.kt`.
 
+## Screens and endpoints (all GET, read-only)
+Shapes were taken from the web console's frontend code; verify against live responses.
+| Screen | Endpoints |
+|---|---|
+| Dashboard: KPIs, severity donut, 7-day volume, heatmap, response actions, categories, top rules/devices/MITRE/users/tags, recent alerts | `/api/v1/stats/summary`, `/api/v1/stats/top`, `/api/v1/stats/timeline?period=7d&interval=1h`, `/api/v1/alerts` |
+| Alerts: severity/category chips, process-name search, paging, detail | `/api/v1/alerts?page&size&sort_by&sort_order&severity&process_name&event_category` |
+| Devices: totals, seats, online/offline, isolated badge, search | `/api/v1/hosts` |
+Not included: vulnerabilities (`/api/v1/vulns*`), rules/groups, notifications, and any action (isolate, uninstall...).
+
 ## Status
 Source complete for login + alerts; **not yet built or tested** (no Android SDK on the dev machine). Pending: stats/hosts/groups screens (need endpoint + sample JSON), test evidence.

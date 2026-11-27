@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.forensiccybertech.eagleye.data.SessionState
-import com.forensiccybertech.eagleye.ui.dashboard.DashboardScreen
+import com.forensiccybertech.eagleye.ui.MainScaffold
 import com.forensiccybertech.eagleye.ui.login.LoginScreen
 import com.forensiccybertech.eagleye.ui.theme.EagleEyeTheme
 import com.forensiccybertech.eagleye.util.onlineFlow
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                             color = MaterialTheme.colorScheme.error
                         )
                         when (state) {
-                            SessionState.LoggedIn -> DashboardScreen(app)
+                            SessionState.LoggedIn -> MainScaffold(app)
                             else -> LoginScreen(app, sessionExpired = state == SessionState.Expired)
                         }
                     }
